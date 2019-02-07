@@ -3,36 +3,57 @@ import {Platform, StyleSheet, Text, View} from 'react-native';
 
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
-export default class Calender extends Component {
 
+class Main extends Component {
   constructor(props) {
     super(props);
-    this.state = { isShowingText: true }
-
-    
-    alert(getTodayDate())
-    
+    this.today = getTodayDate()
+    this.calendar_show = true
+    this.select_day = 'null'
   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to Fuck Native!</Text>
 
-        <CalendarList
-          // Callback which gets executed when visible months change in scroll view. Default = undefined
-          onVisibleMonthsChange={(months) => {console.log('now these months are visible', months);}}
-          // Max amount of months allowed to scroll to the past. Default = 50
-          pastScrollRange={50}
-          // Max amount of months allowed to scroll to the future. Default = 50
-          futureScrollRange={50}
-          // Enable or disable scrolling of calendar list
-          scrollEnabled={true}
-          // Enable or disable vertical scroll indicator. Default = false
-          showScrollIndicator={true}
-        />
-      </View>
-    );
+}
+
+export default class Views extends Main {
+
+  render() {
+    var mark = {
+      [this.today]: {selected: true, selectedColor: 'blue'}
+    }
+    if (this.calendar_show) {
+      return (
+        
+        <View style={styles.container}>
+          <CalendarList
+            // Max amount of months allowed to scroll to the past. Default = 50
+            pastScrollRange={50}
+            // Max amount of months allowed to scroll to the future. Default = 50
+            futureScrollRange={50}
+            scrollEnabled={true}
+            showScrollIndicator={true}
+            firstDay={1}
+            markedDates={mark}
+            onDayPress={(day) => {
+              this.select_day = day
+              this.calendar_show = false
+              console.log('this.calendar_show', this.calendar_show)
+            }}
+          />
+        </View>
+      )
+    }
+    else {
+      return (
+        <View style={styles.container}>
+          <Button
+            onPress={this.calendar_show = true}
+            title="return to calender"
+            color="#841584"
+          />
+        </View>
+      )
+    }
   }
 }
 
@@ -45,7 +66,9 @@ function getTodayDate() {
   let year = date.getFullYear()
   let day_of_week = date.getDay() - 1
 
-  return `${days_of_week[day_of_week]} ${day}.${month}.${year}`
+  console.log(`${days_of_week[day_of_week]} ${day}.${month}.${year}`)
+
+  return `${year}-${month}-${day}`
 }
 
 var RNFS = require('react-native-fs');
@@ -66,11 +89,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
+    backgroundColor: 'white',
+  }
 })
