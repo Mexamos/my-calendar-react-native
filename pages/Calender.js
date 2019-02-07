@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Button, StyleSheet, Text, View} from 'react-native';
 
 import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
 
@@ -17,43 +17,52 @@ class Main extends Component {
 
 export default class Views extends Main {
 
-  render() {
+
+  toggleRenderElement() {
     var mark = {
       [this.today]: {selected: true, selectedColor: 'blue'}
     }
     if (this.calendar_show) {
       return (
-        
-        <View style={styles.container}>
-          <CalendarList
-            // Max amount of months allowed to scroll to the past. Default = 50
-            pastScrollRange={50}
-            // Max amount of months allowed to scroll to the future. Default = 50
-            futureScrollRange={50}
-            scrollEnabled={true}
-            showScrollIndicator={true}
-            firstDay={1}
-            markedDates={mark}
-            onDayPress={(day) => {
-              this.select_day = day
-              this.calendar_show = false
-              console.log('this.calendar_show', this.calendar_show)
-            }}
-          />
-        </View>
-      )
+        <CalendarList
+          // Max amount of months allowed to scroll to the past. Default = 50
+          pastScrollRange={50}
+          // Max amount of months allowed to scroll to the future. Default = 50
+          futureScrollRange={50}
+          scrollEnabled={true}
+          showScrollIndicator={true}
+          firstDay={1}
+          markedDates={mark}
+          onDayPress={(day) => {
+            this.select_day = day
+            this.calendar_show = false
+            this.forceUpdate()
+          }}
+        />
+      )          
     }
     else {
       return (
-        <View style={styles.container}>
-          <Button
-            onPress={this.calendar_show = true}
-            title="return to calender"
-            color="#841584"
-          />
-        </View>
+        <Button
+          onPress={function() {
+            this.calendar_show = true
+            this.forceUpdate()
+          }.bind(this)}
+          title="return to calender"
+          color="#841584"
+        />
       )
     }
+  }
+
+  
+
+  render() {
+    return (
+      <View style={styles.container}>
+      {this.toggleRenderElement()}
+      </View>
+    )
   }
 }
 
