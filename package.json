@@ -10,7 +10,8 @@
     "react": "16.6.3",
     "react-native": "0.58.3",
     "react-native-calendars": "^1.22.0",
-    "react-native-fs": "^2.13.3"
+    "react-native-fs": "^2.13.3",
+    "react-navigation": "^3.3.2"
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",

@@ -4,7 +4,7 @@
  */
 
 import {AppRegistry} from 'react-native';
-import Views from './pages/Calender';
+import containerApp from './pages/Calender';
 import {name as appName} from './app.json';
 
-AppRegistry.registerComponent(appName, () => Views);
+AppRegistry.registerComponent(appName, () => containerApp);
