@@ -22,7 +22,10 @@ export default class HomeScreen extends Component {
                 markedDates={mark}
                 onDayPress={(day) => {
 
-                    this.props.navigation.navigate('TaskList')
+
+                    this.props.navigation.navigate('TaskList', {
+                        "select_day": day,
+                    })
 
                     // this.select_day = day
                     // this.calendar_show = false
@@ -35,16 +38,12 @@ export default class HomeScreen extends Component {
 }
 
 
-function getTodayDate() {
-    let days_of_week = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday',]        
+function getTodayDate() {   
     let date = new Date()
     let day = `${(date.getDate())}`.length === 1 ? `0${date.getDate()}` : date.getDate()
     let month = date.getMonth() + 1
     month = `${month}`.length === 1 ? `0${month}` : month
     let year = date.getFullYear()
-    let day_of_week = date.getDay() - 1
-  
-    console.log(`${days_of_week[day_of_week]} ${day}.${month}.${year}`)
-  
+
     return `${year}-${month}-${day}`
-  }
+}
