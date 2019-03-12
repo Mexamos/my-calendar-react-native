@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
+import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native'
 var RNFS = require('react-native-fs')
 
 var path = RNFS.ExternalStorageDirectoryPath + '/Tenshi.json';
@@ -15,8 +15,8 @@ var path = RNFS.ExternalStorageDirectoryPath + '/Tenshi.json';
 const styles = StyleSheet.create({
   header: {
     width: '100%',
-    height: 60,
-    borderBottomColor: 'red',
+    height: 65,
+    borderBottomColor: 'black',
     borderBottomWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -39,11 +39,10 @@ function normalizeDate(date_string) {
 export default  class TaskList extends Component {
 
   constructor(props) {
-    super(props);
+    super(props)
     this.state = {
-      titleText: "Bird's Nest",
-      bodyText: 'This is not really a bird nest.'
-    };
+      task_list: []
+    }
   }
 
   render() {
@@ -61,14 +60,16 @@ export default  class TaskList extends Component {
       let select_day = navigation.getParam('select_day')
       this.state.select_date = normalizeDate(select_day.timestamp)
 
-      
+      if(navigation.getParam('task_type') === 'one_way') {
+        this.state.task_list.push({'type': navigation.getParam('task_type'), 'name': '', 'date': this.state.select_date})
+      }
 
         return (
         <View>
 
           <View style={styles.header}>
 
-            <TouchableOpacity style={{position: 'absolute', left: 15, width: 40, height: 40, alignItems: 'center', flexDirection: 'row',}}
+            <TouchableOpacity style={{position: 'absolute', left: 15, top: 10, width: 45, height: 45, alignItems: 'center', flexDirection: 'row', backgroundColor: 'black', paddingLeft: 10, borderRadius: 30}}
             onPress={() => this.props.navigation.goBack()}>
               <Image
               style={{width: 20, height: 20}}
@@ -77,24 +78,41 @@ export default  class TaskList extends Component {
             </TouchableOpacity>
 
             <View>
-              <Text style={{width: 100, borderColor: 'green', borderWidth: 2, textAlign: 'center'}}>{this.state.select_date}</Text>
+              <Text style={{width: 100, fontSize: 18, color: 'black', textAlign: 'center'}}>{this.state.select_date}</Text>
             </View>
+
+            <TouchableOpacity style={{position: 'absolute', right: 0, width: 40, height: 60, alignItems: 'center', flexDirection: 'row',}}
+            onPress={() => {
+              this.props.navigation.navigate('NewTask')
+            }}>
+              <Image
+              style={{width: 20, height: 20}}
+              source={require('../images/add.png')}
+              ></Image>
+            </TouchableOpacity>
+
+          </View>
+
+          <View>
+
+            {this.state.task_list.map((prop, key) => {
+              console.log('prop', prop)
+              console.log('key', key)
+              return (
+                <View key={key}>
+                  <TextInput
+                  onChangeText={(text) => {
+                    console.log('text', text)
+                  }}>
+                    {prop.type}
+                  </TextInput>
+                </View>
+              )
+            })}
 
           </View>
 
 
-            <Button
-            title="Go to TaskList... again"
-            onPress={() => this.props.navigation.push('TaskList')}
-            />
-            <Button
-            title="Go to Calendar"
-            onPress={() => this.props.navigation.navigate('Calendar')}
-            />
-            <Button
-            title="Go back"
-            onPress={() => this.props.navigation.goBack()}
-            />
         </View>
         );
     }

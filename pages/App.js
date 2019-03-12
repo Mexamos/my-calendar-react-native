@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import { createAppContainer, createStackNavigator } from 'react-navigation'
 
 import Calendar from './Calendar'
-import TaskList from './TaskList';
+import TaskList from './TaskList'
+import NewTask from './NewTask';
 
 const RootStack = createStackNavigator(
   {
@@ -11,6 +12,9 @@ const RootStack = createStackNavigator(
     },
     TaskList: {
       screen: TaskList,
+    },
+    NewTask: {
+      screen: NewTask,
     },
   },
   {
