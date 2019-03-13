@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput } from 'react-native'
+import { Button, View, Text, StyleSheet, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native'
 var RNFS = require('react-native-fs')
 
 var path = RNFS.ExternalStorageDirectoryPath + '/Tenshi.json';
@@ -41,7 +41,8 @@ export default  class TaskList extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      task_list: []
+      task_list: [],
+      footer: <View></View>
     }
   }
 
@@ -64,8 +65,19 @@ export default  class TaskList extends Component {
         this.state.task_list.push({'type': navigation.getParam('task_type'), 'name': '', 'date': this.state.select_date})
       }
 
+
+      if(this.state.task_list.length > 0) {
+        this.state.footer =  <View style={{ width: '100%',
+        height: 60,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        bottom: 0,
+        borderTopColor: 'black', borderTopWidth: 2, backgroundColor: 'red'}}></View>
+      }
+
         return (
-        <View>
+        <View style={{flex: 1}}>
 
           <View style={styles.header}>
 
@@ -93,7 +105,7 @@ export default  class TaskList extends Component {
 
           </View>
 
-          <View>
+          <ScrollView>
 
             {this.state.task_list.map((prop, key) => {
               console.log('prop', prop)
@@ -104,13 +116,19 @@ export default  class TaskList extends Component {
                   onChangeText={(text) => {
                     console.log('text', text)
                   }}>
-                    {prop.type}
+                    {prop.type + key}
                   </TextInput>
                 </View>
               )
             })}
 
-          </View>
+          </ScrollView>
+
+
+          {
+            this.state.footer
+          }
+          
 
 
         </View>
