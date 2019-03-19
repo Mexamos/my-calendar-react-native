@@ -20,6 +20,7 @@ export default  class NewTask extends Component {
                 onPress={() => {
                     this.props.navigation.navigate('TaskList', {
                         "task_type": 'one_way',
+                        "dot_color": 'blue'
                     })
                 }}
                 style={{marginBottom: 10, backgroundColor: 'black', paddingTop: 8, paddingBottom: 8, paddingLeft: 12, paddingRight: 12, borderRadius: 3}}>
@@ -30,6 +31,7 @@ export default  class NewTask extends Component {
                 onPress={() => {
                     this.props.navigation.navigate('TaskList', {
                         "task_type": 'battle',
+                        "dot_color": 'red'
                     })
                 }}
                 style={{marginBottom: 10, backgroundColor: 'black', paddingTop: 8, paddingBottom: 8, paddingLeft: 12, paddingRight: 12, borderRadius: 3}}>
@@ -40,6 +42,7 @@ export default  class NewTask extends Component {
                 onPress={() => {
                     this.props.navigation.navigate('TaskList', {
                         "task_type": 'complex_way',
+                        "dot_color": 'green'
                     })
                 }}
                 style={{backgroundColor: 'black', paddingTop: 8, paddingBottom: 8, paddingLeft: 12, paddingRight: 12, borderRadius: 3}}>
